@@ -1,3 +1,4 @@
 # Do not include any images in the repository
 /src/main/resources/
-.idea/
+.idea
+target/
