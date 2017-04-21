@@ -21,6 +21,7 @@ import org.deeplearning4j.nn.conf.layers.SubsamplingLayer;
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
 import org.deeplearning4j.nn.weights.WeightInit;
 import org.deeplearning4j.optimize.listeners.ScoreIterationListener;
+import org.deeplearning4j.util.ModelSerializer;
 import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.dataset.DataSet;
 import org.nd4j.linalg.dataset.api.iterator.DataSetIterator;
@@ -30,6 +31,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.Random;
+import java.util.Scanner;
 
 public class StreetWearDeepLearningTrainer {
 
@@ -135,6 +137,23 @@ public class StreetWearDeepLearningTrainer {
 
         log.info(eval.stats());
         log.info("############ Finished Evaluation #############");
+
+
+        log.info("Would you like to save the model (y/n): ");
+        Scanner scan = new Scanner(System.in);
+        String s = scan.next();
+
+        if ("y".equalsIgnoreCase(s)) {
+            try {
+                File fileToLocation = new File(args[0]);
+                ModelSerializer.writeModel(model, fileToLocation, true);
+                log.info("Saved the Model");
+            } catch (Exception e) {
+                log.info("Unable to save the model, make sure the file path " +
+                        "is the first argument of args");
+            }
+        }
+
 
     }
 
